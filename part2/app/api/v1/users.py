@@ -20,11 +20,11 @@ class UserList(Resource):
         """Register a new user"""
         user_data = api.payload
 
-        existing_user = facade.facade.get_user_by_email(user_data['email'])
+        existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             return {'error': 'Email already registered'}, 400
 
-        new_user = facade.facade.create_user(user_data)
+        new_user = facade.create_user(user_data)
         return {
             'id': new_user.id,
             'first_name': new_user.first_name,
@@ -35,7 +35,7 @@ class UserList(Resource):
     @api.response(200, 'List of users retrieved successfully')
     def get(self):
         """Retrieve a list of all users"""
-        users = facade.facade.get_all_users()
+        users = facade.get_all_users()
         result = [
             {
                 'id': u.id,
@@ -54,7 +54,7 @@ class UserResource(Resource):
     @api.response(404, 'User not found')
     def get(self, user_id):
         """Get user details by ID"""
-        user = facade.facade.get_user(user_id)
+        user = facade.get_user(user_id)
         if not user:
             return {'error': 'User not found'}, 404
         return {
@@ -74,11 +74,11 @@ class UserResource(Resource):
 
         # Optional: email uniqueness check on update
         if 'email' in data:
-            existing = facade.facade.get_user_by_email(data['email'])
+            existing = facade.get_user_by_email(data['email'])
             if existing and existing.id != user_id:
                 return {'error': 'Email already registered'}, 400
 
-        updated_user = facade.facade.update_user(user_id, data)
+        updated_user = facade.update_user(user_id, data)
         if not updated_user:
             return {'error': 'User not found'}, 404
 
