@@ -1,3 +1,4 @@
 from app.services.facade import HBnBFacade
 
-facade = HBnBFacad
+# Singleton instance used across the whole app
+facade = HBnBFacade()
