@@ -21,16 +21,15 @@ class HBnBFacade:
     #  User                                                                #
     # ------------------------------------------------------------------ #
 
+    # ------------------------------------------------------------------ #
+    #  User                                                              #
+    # ------------------------------------------------------------------ #
+
     def create_user(self, user_data):
-        email = user_data.get('email', '')
-        if not User.validate_email(email):
-            raise ValueError("Invalid email format")
-        if self.user_repo.get_by_attribute('email', email):
-            raise ValueError("Email already registered")
         user = User(
-            first_name=user_data.get('first_name', '').strip(),
-            last_name=user_data.get('last_name', '').strip(),
-            email=email,
+            first_name=user_data.get('first_name', ''),
+            last_name=user_data.get('last_name', ''),
+            email=user_data.get('email', ''),
             password=user_data.get('password', ''),
             is_admin=user_data.get('is_admin', False)
         )
@@ -40,6 +39,10 @@ class HBnBFacade:
     def get_user(self, user_id):
         return self.user_repo.get(user_id)
 
+    def get_user_by_email(self, email):
+        """This fixes the AttributeError you just received"""
+        return self.user_repo.get_by_attribute('email', email)
+
     def get_all_users(self):
         return self.user_repo.get_all()
 
@@ -47,13 +50,6 @@ class HBnBFacade:
         user = self.user_repo.get(user_id)
         if not user:
             return None
-        if 'email' in user_data:
-            email = user_data['email']
-            if not User.validate_email(email):
-                raise ValueError("Invalid email format")
-            existing = self.user_repo.get_by_attribute('email', email)
-            if existing and existing.id != user_id:
-                raise ValueError("Email already registered")
         user.update(user_data)
         return user
 
