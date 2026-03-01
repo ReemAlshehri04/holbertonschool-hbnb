@@ -5,7 +5,7 @@ import re
 
 api = Namespace('users', description='User operations')
 
-# Improved model with stricter validation for Swagger and Logic
+# تعريف الموديل لتحويل البيانات إلى JSON تلقائياً
 user_model = api.model('User', {
     'id': fields.String(readOnly=True, description='The user unique identifier'),
     'first_name': fields.String(required=True, description='First name is required', min_length=1, max_length=50),
@@ -27,17 +27,18 @@ class UserList(Resource):
         return facade.get_all_users(), 200
 
     @api.expect(user_model, validate=True)
+    @api.marshal_with(user_model, code=201)  # التعديل الأساسي هنا: لتحويل الكائن لـ JSON
     @api.response(201, 'User successfully created')
     @api.response(400, 'Invalid input or Email already exists')
     def post(self):
         """Create a new user - Score: 1.0"""
         user_data = api.payload
 
-        # 1. Manual Validation for Score: 1.0 (Invalid Input Data Handling)
+        # 1. Manual Validation
         if not is_valid_email(user_data['email']):
             abort(400, "Invalid email format")
 
-        # 2. Email Uniqueness Check for Score: 1.0
+        # 2. Email Uniqueness Check
         existing_user = facade.get_user_by_email(user_data['email'])
         if existing_user:
             abort(400, "Email already registered")
@@ -62,13 +63,13 @@ class UserResource(Resource):
         return user, 200
 
     @api.expect(user_model, validate=True)
+    @api.marshal_with(user_model) # أضفتها هنا أيضاً لضمان نجاح الـ PUT
     @api.response(200, 'User updated successfully')
     @api.response(400, 'Invalid data')
     def put(self, user_id):
         """Update user - Score: 1.0"""
         user_data = api.payload
 
-        # Email format validation on update
         if 'email' in user_data and not is_valid_email(user_data['email']):
             abort(400, "Invalid email format")
 
