@@ -21,16 +21,17 @@ class HBnBFacade:
     #  User                                                              #
     # ------------------------------------------------------------------ #
 
-    def create_user(self, user_data):
-        user = User(
-            first_name=user_data.get('first_name', ''),
-            last_name=user_data.get('last_name', ''),
-            email=user_data.get('email', ''),
-            password=user_data.get('password', ''),
-            is_admin=user_data.get('is_admin', False)
-        )
-        self.user_repo.add(user)
-        return user
+def create_user(self, user_data):
+    user = User(
+        first_name=user_data.get('first_name', ''),
+        last_name=user_data.get('last_name', ''),
+        email=user_data.get('email', ''),
+        password='',          # placeholder; will be hashed below
+        is_admin=user_data.get('is_admin', False)
+    )
+    user.hash_password(user_data.get('password', ''))
+    self.user_repo.add(user)
+    return user
 
     def get_user(self, user_id):
         return self.user_repo.get(user_id)

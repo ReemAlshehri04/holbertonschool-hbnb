@@ -5,12 +5,20 @@ import re
 
 api = Namespace('users', description='User operations')
 
-# تعريف الموديل لتحويل البيانات إلى JSON تلقائياً
+# تعريف الموديل لتحويل البيانات إلى JSON تلقائياً (response model, no password)
 user_model = api.model('User', {
     'id': fields.String(readOnly=True, description='The user unique identifier'),
     'first_name': fields.String(required=True, description='First name is required', min_length=1, max_length=50),
     'last_name': fields.String(required=True, description='Last name is required', min_length=1, max_length=50),
     'email': fields.String(required=True, description='Valid email is required')
+})
+
+# Separate input model for POST (includes password)
+user_input_model = api.model('UserInput', {
+    'first_name': fields.String(required=True, description='First name', min_length=1, max_length=50),
+    'last_name':  fields.String(required=True, description='Last name',  min_length=1, max_length=50),
+    'email':      fields.String(required=True, description='Valid email'),
+    'password':   fields.String(required=True, description='User password'),
 })
 
 def is_valid_email(email):
@@ -26,8 +34,8 @@ class UserList(Resource):
         """Retrieve all users - Score: 1.0"""
         return facade.get_all_users(), 200
 
-    @api.expect(user_model, validate=True)
-    @api.marshal_with(user_model, code=201)  # التعديل الأساسي هنا: لتحويل الكائن لـ JSON
+    @api.expect(user_input_model, validate=True)
+    @api.marshal_with(user_model, code=201)  # response model (no password)
     @api.response(201, 'User successfully created')
     @api.response(400, 'Invalid input or Email already exists')
     def post(self):
