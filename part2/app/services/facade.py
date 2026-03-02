@@ -18,10 +18,6 @@ class HBnBFacade:
         self.review_repo = InMemoryRepository()
 
     # ------------------------------------------------------------------ #
-    #  User                                                                #
-    # ------------------------------------------------------------------ #
-
-    # ------------------------------------------------------------------ #
     #  User                                                              #
     # ------------------------------------------------------------------ #
 
@@ -40,7 +36,6 @@ class HBnBFacade:
         return self.user_repo.get(user_id)
 
     def get_user_by_email(self, email):
-        """This fixes the AttributeError you just received"""
         return self.user_repo.get_by_attribute('email', email)
 
     def get_all_users(self):
@@ -54,7 +49,7 @@ class HBnBFacade:
         return user
 
     # ------------------------------------------------------------------ #
-    #  Amenity                                                             #
+    #  Amenity                                                           #
     # ------------------------------------------------------------------ #
 
     def create_amenity(self, amenity_data):
@@ -79,7 +74,7 @@ class HBnBFacade:
         return amenity
 
     # ------------------------------------------------------------------ #
-    #  Place                                                               #
+    #  Place                                                             #
     # ------------------------------------------------------------------ #
 
     def create_place(self, place_data):
@@ -107,12 +102,14 @@ class HBnBFacade:
             owner_id=owner_id
         )
 
+        # Validate amenities
         for aid in place_data.get('amenities', []):
             amenity = self.amenity_repo.get(aid)
             if not amenity:
                 raise ValueError(f"Amenity '{aid}' not found")
             if amenity not in place.amenities:
                 place.amenities.append(amenity)
+
         self.place_repo.add(place)
         return place
 
@@ -127,6 +124,7 @@ class HBnBFacade:
         if not place:
             return None
 
+        # Validate numeric fields
         if 'price' in place_data and place_data['price'] < 0:
             raise ValueError("Price must be non-negative")
         if 'latitude' in place_data and not (-90.0 <= place_data['latitude'] <= 90.0):
@@ -134,6 +132,7 @@ class HBnBFacade:
         if 'longitude' in place_data and not (-180.0 <= place_data['longitude'] <= 180.0):
             raise ValueError("Longitude must be between -180 and 180")
 
+        # Validate amenities
         if 'amenities' in place_data:
             amenity_ids = place_data.pop('amenities')
             place.amenities = []
@@ -142,11 +141,12 @@ class HBnBFacade:
                 if not amenity:
                     raise ValueError(f"Amenity '{aid}' not found")
                 place.amenities.append(amenity)
+
         place.update(place_data)
         return place
 
     # ------------------------------------------------------------------ #
-    #  Review                                                              #
+    #  Review                                                            #
     # ------------------------------------------------------------------ #
 
     def create_review(self, review_data):
@@ -164,8 +164,7 @@ class HBnBFacade:
         if not isinstance(rating, int) or not (1 <= rating <= 5):
             raise ValueError("Rating must be an integer between 1 and 5")
 
-        review = Review(text=text, rating=rating,
-                        place_id=place_id, user_id=user_id)
+        review = Review(text=text, rating=rating, place_id=place_id, user_id=user_id)
         self.review_repo.add(review)
 
         place = self.place_repo.get(place_id)
@@ -181,26 +180,37 @@ class HBnBFacade:
         return self.review_repo.get_all()
 
     def get_reviews_by_place(self, place_id):
-        return [r for r in self.review_repo.get_all()
-                if r.place_id == place_id]
+        return [r for r in self.review_repo.get_all() if r.place_id == place_id]
 
     def update_review(self, review_id, review_data):
         review = self.review_repo.get(review_id)
         if not review:
             return None
+
+        # Validate text
+        if 'text' in review_data:
+            if not review_data['text'] or not str(review_data['text']).strip():
+                raise ValueError("text is required")
+
+        # Validate rating
         if 'rating' in review_data:
             rating = review_data['rating']
             if not isinstance(rating, int) or not (1 <= rating <= 5):
                 raise ValueError("Rating must be an integer between 1 and 5")
-        review.update(review_data)
+
+        # Only allow updating text and rating
+        allowed = {k: v for k, v in review_data.items() if k in ('text', 'rating')}
+        review.update(allowed)
         return review
 
     def delete_review(self, review_id):
         review = self.review_repo.get(review_id)
         if not review:
             return False
+
         place = self.place_repo.get(review.place_id)
         if place:
             place.reviews = [r for r in place.reviews if r.id != review_id]
+
         self.review_repo.delete(review_id)
         return True
