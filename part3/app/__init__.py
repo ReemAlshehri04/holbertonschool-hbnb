@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_restx import Api
+from config import DevelopmentConfig   # import the class directly
 
 
-def create_app(config_class=None):
+def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
 
-    # Apply configuration class if provided
-    if config_class:
-        app.config.from_object(config_class)
+    # Always load the config object (class)
+    app.config.from_object(config_class)
 
     api = Api(
         app,

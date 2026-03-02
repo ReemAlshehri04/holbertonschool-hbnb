@@ -1,4 +1,4 @@
-from app.models.base_model import BaseModel
+from app.models import BaseModel
 import re
 
 class User(BaseModel):
@@ -18,7 +18,6 @@ class User(BaseModel):
         return email
 
     def to_dict(self):
-        """Mandatory for Part 2 to avoid 'MISSING' errors"""
         return {
             'id': self.id,
             'first_name': self.first_name,
