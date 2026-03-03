@@ -1,6 +1,15 @@
+import uuid
+from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
+from app.services.Database.database import Base
 from app.models import BaseModel
 
-class Amenity(BaseModel):
+class Amenity(BaseModel, Base):
+    __tablename__ = "amenities"
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    name = Column(String(50), nullable=False)
+    places_rel = relationship("Place", secondary="place_amenity", back_populates="amenities_rel")
+
     def __init__(self, name, **kwargs):
         """
         Initialize Amenity entity for Part 2
@@ -23,7 +32,7 @@ class Amenity(BaseModel):
         It fixes the 'MISSING' error in your evaluation.
         """
         return {
-            'id': self.id,
+            'id': str(self.id),
             'name': self.name,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None

@@ -1,9 +1,22 @@
+import uuid
+from sqlalchemy import Column, String, Boolean
+from sqlalchemy.orm import relationship
+from app.services.Database.database import Base 
 from app.models import BaseModel
 from app import bcrypt
 import re
 
+class User(BaseModel, Base):
+    __tablename__ = "users"
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    email = Column(String(120), unique=True, nullable=False)
+    password = Column(String(128), nullable=False)
+    first_name = Column(String(50), nullable=False)
+    last_name = Column(String(50), nullable=False)
+    is_admin = Column(Boolean, default=False)
+    places = relationship("Place", backref="owner", cascade="all, delete-orphan")
+    reviews = relationship("Review", back_populates="user", cascade="all, delete-orphan")
 
-class User(BaseModel):
     def __init__(self, email, password, first_name, last_name, is_admin=False, **kwargs):
         """
         User model
