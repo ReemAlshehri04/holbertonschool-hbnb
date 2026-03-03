@@ -1,3 +1,6 @@
+from app.services.Database.database import Base, get_session
+from sqlalchemy import Table, Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 from app.models import BaseModel
 
 class Place(BaseModel):
@@ -89,3 +92,37 @@ class Place(BaseModel):
             'created_at': self.created_at.isoformat() if getattr(self, 'created_at', None) else None,
             'updated_at': self.updated_at.isoformat() if getattr(self, 'updated_at', None) else None
         }
+
+
+
+place_amenity = Table(
+    "place_amenity",
+    Base.metadata,
+    Column("place_id", String(36), ForeignKey("places.id"), primary_key=True),
+    Column("amenity_id", String(36), ForeignKey("amenities.id"), primary_key=True)
+)
+
+Place.reviews_rel = relationship(
+    "Review",
+    back_populates="place",
+    cascade="all, delete-orphan"
+)
+
+Place.amenities_rel = relationship(
+    "Amenity",
+    secondary=place_amenity,
+    back_populates="places_rel"
+)
+
+from app.models.review import Review
+Review.place = relationship(
+    "Place",
+    back_populates="reviews_rel"
+)
+
+from app.models.amenity import Amenity
+Amenity.places_rel = relationship(
+    "Place",
+    secondary=place_amenity,
+    back_populates="amenities_rel"
+)
