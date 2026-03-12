@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_restx import Api
-from config import DevelopmentConfig   # import the class directly
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
@@ -9,7 +8,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
-def create_app(config_class=DevelopmentConfig):
+def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
 
     # Always load the config object (class)
