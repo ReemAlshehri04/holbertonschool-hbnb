@@ -1,3 +1,4 @@
+
 # HBnB – Part 3: Enhanced Backend with Authentication and Database Integration
 
 ## 📌 Project Overview
@@ -52,65 +53,64 @@ By the end of this part of the project, you will be able to:
 ---
 
 ## 🏗 Project Structure
-
-\`\`\`
-part3/
-├── app/
-│   ├── __init__.py
-│   │
-│   ├── api/
-│   │   ├── __init__.py
-│   │   └── v1/
-│   │       ├── __init__.py
-│   │       ├── auth.py
-│   │       ├── users.py
-│   │       ├── places.py
-│   │       ├── reviews.py
-│   │       └── amenities.py
-│   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── base_model.py
-│   │   ├── user.py
-│   │   ├── place.py
-│   │   ├── review.py
-│   │   └── amenity.py
-│   │
-│   ├── services/
-│   │   ├── __init__.py
-│   │   ├── facade.py
-│   │   └── database/
-│   │       └── database.py
-│   │
-│   └── persistence/
-│       ├── __init__.py
-│       ├── repository.py
-│       └── sql/
-│           ├── schema.sql
-│           └── data.sql
-│
-├── tests/
-│   ├── __init__.py
-│   ├── test_models.py
-│   ├── test_facade.py
-│   ├── test_api_users.py
-│   ├── test_auth_admin.py
-│   ├── test_place_rel.py
-│   ├── test_relationships.py
-│   └── final_check_task8.py
-│
-├── run.py
-├── config.py
-├── requirements.txt
-├── er_diagram.mmd
+```
+part3/  
+├── app/  
+│ ├── **init**.py  
+│ │  
+│ ├── api/  
+│ │ ├── **init**.py  
+│ │ └── v1/  
+│ │ ├── **init**.py  
+│ │ ├── auth.py  
+│ │ ├── users.py  
+│ │ ├── places.py  
+│ │ ├── reviews.py  
+│ │ └── amenities.py  
+│ │  
+│ ├── models/  
+│ │ ├── **init**.py  
+│ │ ├── base_model.py  
+│ │ ├── user.py  
+│ │ ├── place.py  
+│ │ ├── review.py  
+│ │ └── amenity.py  
+│ │  
+│ ├── services/  
+│ │ ├── **init**.py  
+│ │ ├── facade.py  
+│ │ └── database/  
+│ │ └── database.py  
+│ │  
+│ └── persistence/  
+│ ├── **init**.py  
+│ ├── repository.py  
+│ └── sql/  
+│ ├── schema.sql  
+│ └── data.sql  
+│  
+├── tests/  
+│ ├── **init**.py  
+│ ├── test_models.py  
+│ ├── test_facade.py  
+│ ├── test_api_users.py  
+│ ├── test_auth_admin.py  
+│ ├── test_place_rel.py  
+│ ├── test_relationships.py  
+│ └── final_check_task8.py  
+│  
+├── run.py  
+├── config.py  
+├── requirements.txt  
+├── er_diagram.mmd  
 └── README.md
-\`\`\`
+```
 
 ---
 
 ## 🗄 Database Design (ER Diagram)
 
-\`\`\`mermaid
+```mermaid
 erDiagram
     USER ||--o{ PLACE : owns
     USER ||--o{ REVIEW : writes
@@ -160,103 +160,104 @@ erDiagram
     PLACE_AMENITY {
         string place_id FK
         string amenity_id FK
-    }
-\`\`\`
-
----
+  }
+```
 
 ## 🔐 Authentication
 
 Authentication is implemented using **JWT tokens**.
 
 ### Login Flow
+
 1. A user registers an account.
+    
 2. The user logs in using email and password.
+    
 3. The server returns a **JWT token**.
+    
 4. The token must be included in protected requests.
+    
 
 Example header:
-
-\`\`\`
+```
 Authorization: Bearer <JWT_TOKEN>
-\`\`\`
-
----
-
+```
 ## ⚙️ Technologies Used
 
 - Python 3
+    
 - Flask
+    
 - Flask-JWT-Extended
+    
 - SQLAlchemy
+    
 - SQLite (development)
+    
 - MySQL (production)
+    
 - Mermaid.js (ER diagrams)
+    
 - bcrypt (password hashing)
+    
 
 ---
 
 ## 📦 Installation
 
 Clone the repository:
-
-\`\`\`bash
+```bash 
 git clone https://github.com/badriahalmalki/holbertonschool-hbnb.git
 cd holbertonschool-hbnb/part3
-\`\`\`
+```
 
 Create a virtual environment:
-
-\`\`\`bash
+```bash
 python3 -m venv venv
 source venv/bin/activate
-\`\`\`
+```
 
 Install dependencies:
-
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
-
----
-
+```
 ## ▶️ Running the Application
 
 Start the server:
 
-\`\`\`bash
+```bash
 python3 run.py
-\`\`\`
+```
 
 The API will run on:
 
-\`\`\`
+```bash
 http://localhost:5000
-\`\`\`
-
----
+```
 
 ## 🧪 Example API Endpoints
 
 ### Register User
-\`\`\`
+
 POST /api/v1/users
-\`\`\`
 
 ### Login
-\`\`\`
+```bash
 POST /api/v1/auth/login
-\`\`\`
+```
+
 
 ### Get Places
-\`\`\`
-GET /api/v1/places
-\`\`\`
+
+```bash
+GET /api/v1/places 
+```
 
 ### Create Review (Authenticated)
-\`\`\`
-POST /api/v1/reviews
-\`\`\`
+
+```bash
+POST /api/v1/reviews 
+```
 
 ---
 
@@ -265,28 +266,37 @@ POST /api/v1/reviews
 Some endpoints are restricted to **administrators only**.
 
 Examples include:
+
 - Creating amenities
+    
 - Managing users
+    
 
 Admin privileges are controlled via:
 
-\`\`\`
+```bash
 is_admin = True
-\`\`\`
+```
 
 ---
 
 ## 🚀 Future Improvements
 
 - Add **MySQL configuration for production**
+    
 - Implement **pagination and filtering**
+    
 - Expand **unit and integration tests**
+    
 - Improve **API documentation**
+    
 
 ---
 
 ## 👩‍💻 Authors
 
 - Reem Abdulhadi Alshehri
+    
 - Badriah Barakat Almalki
+    
 - Ebtihal Alomari
