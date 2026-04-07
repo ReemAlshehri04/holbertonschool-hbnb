@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Add Review</title>
+  <meta charset="UTF-8">
+  <title>Add Review - HBnB</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -10,22 +11,29 @@
   <img src="logo.png" class="logo">
   <nav>
     <a href="index.html">Home</a>
-    <a href="login.html" class="login-button">Login</a>
+    <a href="login.html" id="login-link" class="login-button">Login</a>
   </nav>
 </header>
 
-<h2>Add Review</h2>
+<main>
+  <h2>Add Review</h2>
 
-<form class="add-review">
-  <textarea placeholder="Write your review" required></textarea><br><br>
-  <input type="number" min="1" max="5" required><br><br>
-  <button type="submit">Submit</button>
-</form>
+  <form id="review-form" class="add-review">
+    <label for="review-text">Your Experience:</label><br>
+    <textarea id="review-text" placeholder="Write your review" required></textarea><br><br>
+
+    <label for="review-rating">Rating (1-5):</label><br>
+    <input type="number" id="review-rating" min="1" max="5" value="5" required><br><br>
+
+    <button type="submit">Submit Review</button>
+  </form>
+</main>
 
 <footer>
   <p>All rights reserved</p>
 </footer>
 
-</body>
-</html> 
+<script src="scripts.js"></script>
 
+</body>
+</html>

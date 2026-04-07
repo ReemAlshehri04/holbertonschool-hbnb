@@ -1,46 +1,58 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const errorMessage = document.getElementById('error-message');
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            // 1. Prevent default form submission (prevents page reload)
-            event.preventDefault();
+async function fetchPlaces() {
+    const token = getCookie('token');
+    const loginLink = document.getElementById('login-link');
 
-            // 2. Get data from the input fields
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                // 3. Make the AJAX request to your Back-end API
-                const response = await fetch('http://127.0.0.1:5000/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-
-                // 4. Handle the API Response
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    // Store the JWT token in a cookie
-                    // "path=/" ensures the token is available on all pages
-                    document.cookie = `token=${data.access_token}; path=/; SameSite=Lax`;
-
-                    // Redirect to the main page (index.html)
-                    window.location.href = 'index.html';
-                } else {
-                    // Show error if login fails (e.g., 401 Unauthorized)
-                    const errorData = await response.json();
-                    errorMessage.textContent = errorData.msg || 'Login failed. Please check your credentials.';
-                }
-            } catch (error) {
-                // Handle network errors (if API is down)
-                console.error('Connection Error:', error);
-                errorMessage.textContent = 'Could not connect to the server.';
-            }
-        });
+    if (token) {
+        loginLink.style.display = 'none';
+    } else {
+        loginLink.style.display = 'block';
     }
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/api/v1/places');
+        const places = await response.json();
+        displayPlaces(places);
+    } catch (error) {
+        console.error('Error fetching places:', error);
+    }
+}
+
+function displayPlaces(places) {
+    const container = document.getElementById('places-list');
+    container.innerHTML = '';
+
+    places.forEach(place => {
+        const card = document.createElement('div');
+        card.className = 'place-card';
+        card.setAttribute('data-price', place.price_by_night);
+
+        card.innerHTML = `
+            <h3>${place.name}</h3>
+            <p>$${place.price_by_night} / night</p>
+            <button class="details-button" onclick="window.location.href='place.html?id=${place.id}'">View Details</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', fetchPlaces);
+
+document.getElementById('price-filter').addEventListener('change', (e) => {
+    const maxPrice = e.target.value;
+    const cards = document.querySelectorAll('.place-card');
+    
+    cards.forEach(card => {
+        const price = parseInt(card.getAttribute('data-price'));
+        if (maxPrice === 'All' || price <= parseInt(maxPrice)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 });

@@ -1,36 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Places</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
 <header>
   <img src="logo.png" class="logo">
   <nav>
     <a href="index.html">Home</a>
-    <a href="login.html" class="login-button">Login</a>
+    <a href="login.html" id="login-link" class="login-button">Login</a>
   </nav>
 </header>
 
+<section id="filters">
+  <select id="price-filter">
+      <option value="All">All Prices</option>
+      <option value="10">$10 or less</option>
+      <option value="50">$50 or less</option>
+      <option value="100">$100 or less</option>
+  </select>
+</section>
+
 <h2>Places</h2>
 
-<div class="place-card">
-  <h3>Place 1</h3>
-  <p>$100 / night</p>
-  <a href="place.html"><button class="details-button">View Details</button></a>
-</div>
+<div id="places-list">
+    </div>
 
-<div class="place-card">
-  <h3>Place 2</h3>
-  <p>$150 / night</p>
-  <a href="place.html"><button class="details-button">View Details</button></a>
-</div>
-
-<footer>
-  <p>All rights reserved</p>
-</footer>
-
-</body>
-</html>
+<script src="scripts.js"></script>
