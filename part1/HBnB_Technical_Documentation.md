@@ -1,4 +1,4 @@
-# HBnB Evolution - Technical Documentation
+git add scripts.js login.html# HBnB Evolution - Technical Documentation
 ## Part 1: Architecture and Design Specification
 
 ---
