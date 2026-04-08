@@ -1,4 +1,3 @@
-
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -8,12 +7,15 @@ function getCookie(name) {
 
 async function fetchPlaces(token) {
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/v1/places', {
+       
+        const response = await fetch('http://127.0.0.1:5000/api/v1/places/', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
             const places = await response.json();
             displayPlaces(places);
+        } else {
+            console.error('Failed to fetch places:', response.statusText);
         }
     } catch (error) {
         console.error('Error fetching places:', error);
@@ -24,6 +26,12 @@ function displayPlaces(places) {
     const container = document.getElementById('places-list');
     if (!container) return;
     container.innerHTML = ''; 
+
+    if (places.length === 0) {
+        container.innerHTML = '<p>No places available at the moment.</p>';
+        return;
+    }
+
     places.forEach(place => {
         const card = document.createElement('div');
         card.className = 'place-card';
@@ -38,12 +46,10 @@ function displayPlaces(places) {
     });
 }
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const token = getCookie('token');
 
-    
+   
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
@@ -52,7 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login', {
+                
+                const response = await fetch('http://127.0.0.1:5000/api/v1/auth/login/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -71,11 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-   
     if (document.getElementById('places-list')) {
         if (token) {
             fetchPlaces(token);
         } else {
+           
             window.location.href = 'login.html';
         }
     }
@@ -88,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cards = document.querySelectorAll('.place-card');
             cards.forEach(card => {
                 const price = parseFloat(card.getAttribute('data-price'));
+                // تحويل selectedPrice إلى رقم للمقارنة الصحيحة
                 if (selectedPrice === "All" || price <= parseFloat(selectedPrice)) {
                     card.style.display = 'block';
                 } else {
