@@ -1,0 +1,10 @@
+# app/extensions.py
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
+
+# ✅ إنشاء instance واحد لكل امتداد
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+jwt = JWTManager()

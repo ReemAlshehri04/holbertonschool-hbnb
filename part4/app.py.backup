@@ -1,0 +1,96 @@
+from flask import Flask, jsonify, request  # <-- أضف jsonify و request
+from flask_cors import CORS
+from flask_restx import Api
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+
+def create_app():
+    app = Flask(__name__)
+
+    # إعدادات JWT
+    app.config['JWT_SECRET_KEY'] = 'super-secret-key'
+    app.config['JWT_TOKEN_LOCATION'] = ['headers']  # التوكن يقرأ من الهيدر
+    app.config['JWT_HEADER_NAME'] = 'Authorization'
+    app.config['JWT_HEADER_TYPE'] = 'Bearer'
+
+    JWTManager(app)
+
+    # ✅ إعداد CORS للسماح لملفات HTML المحلية بالاتصال
+    CORS(app, 
+         resources={r"/*": {"origins": "*"}},  # يسمح لأي مصدر (للتطوير فقط)
+         supports_credentials=True,  # يسمح بإرسال الكوكيز والتوكن
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # الطرق المسموحة
+         allow_headers=["Content-Type", "Authorization"]  # الهيدرز المسموحة
+    )
+
+    # إعداد API مع Swagger Documentation
+    api = Api(app, 
+              doc='/docs',
+              title="HBnB API",
+              version="1.0",
+              description="API for HBnB project")
+
+    # استيراد Namespaces
+    from app.api.v1.auth import api as auth_ns
+    from app.api.v1.places import api as places_ns  # تأكد من وجود هذا الملف
+    from app.api.v1.reviews import api as reviews_ns  # تأكد من وجود هذا الملف
+
+    # إضافة Namespaces
+    api.add_namespace(auth_ns, path='/api/v1/auth')
+    api.add_namespace(places_ns, path='/api/v1/places')
+    api.add_namespace(reviews_ns, path='/api/v1/reviews')
+
+    # ✅ إضافة مسار اختبار بسيط للتأكد من أن API يعمل
+    @app.route('/health', methods=['GET'])
+    def health_check():
+        return jsonify({"status": "healthy", "message": "API is running!"}), 200
+
+    # ✅ مسار تسجيل الدخول (إذا لم يكن موجودًا في auth_ns)
+    @app.route('/login', methods=['POST'])
+    def login():
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+        
+        # هنا ضع منطق التحقق من المستخدم من قاعدة البيانات
+        # هذا مجرد مثال بسيط - استبدله بمنطقك الحقيقي
+        if email == "user@example.com" and password == "password123":
+            access_token = create_access_token(identity=email)
+            return jsonify({"access_token": access_token}), 200
+        else:
+            return jsonify({"msg": "Invalid email or password"}), 401
+
+    # ✅ مسار جلب جميع الأماكن (مؤقت للاختبار)
+    @app.route('/places', methods=['GET'])
+    @jwt_required()  # يتطلب توكن صالح
+    def get_places():
+        # بيانات مؤقتة للاختبار - استبدلها بقاعدة البيانات
+        places = [
+            {"id": 1, "name": "برج إيفل", "location": "France", "description": "برج شهير في باريس"},
+            {"id": 2, "name": "تمثال الحرية", "location": "USA", "description": "تمثال في نيويورك"},
+            {"id": 3, "name": "الكولوسيوم", "location": "Italy", "description": "مدرج روماني قديم"}
+        ]
+        return jsonify(places), 200
+
+    # ✅ مسار إضافة تقييم (مؤقت للاختبار)
+    @app.route('/places/<int:place_id>/reviews', methods=['POST'])
+    @jwt_required()
+    def add_review(place_id):
+        data = request.get_json()
+        rating = data.get('rating')
+        comment = data.get('comment')
+        
+        # هنا ضع منطق حفظ التقييم في قاعدة البيانات
+        return jsonify({
+            "msg": "Review added successfully",
+            "review": {
+                "place_id": place_id,
+                "rating": rating,
+                "comment": comment
+            }
+        }), 201
+
+    return app
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(debug=True, host='127.0.0.1', port=5000)
