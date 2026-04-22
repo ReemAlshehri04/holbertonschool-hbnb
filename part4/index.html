@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌿 EcoStay - Discover Nature Places</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🌿 EcoStay · Nature Stays & Eco Retreats</title>
     <style>
         * {
             margin: 0;
@@ -12,448 +12,794 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+            background: #f0f7ea;
+            background-image: radial-gradient(circle at 10% 20%, rgba(167, 207, 145, 0.15) 0%, rgba(200, 230, 201, 0.3) 100%);
             min-height: 100vh;
-            color: #2e4a2e;
+            color: #1e3a2f;
         }
 
-        /* 🌟 Header with Nature Gradient */
         header {
-            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            background: linear-gradient(105deg, #1c4d2d 0%, #2b6e3c 100%);
             color: white;
-            padding: 20px 40px;
+            padding: 20px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-bottom: 3px solid #81c784;
             flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 8px 20px rgba(0, 20, 0, 0.2);
+            border-bottom: 2px solid #b9f6ca;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
+            cursor: pointer;
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: #f1f8e9;
-            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            background: #fef9e6;
+            border-radius: 60% 40% 50% 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            font-size: 32px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2);
         }
 
         .logo-text {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFF9C4, #E8F5E9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .logo-text span {
-            color: #c8e6c9;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #dcedc8;
+            display: block;
         }
 
         nav {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
             flex-wrap: wrap;
         }
 
-        nav a {
-            color: white;
+        nav a, .back-link {
+            color: #f5f5dc;
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.1);
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: rgba(255,255,220,0.1);
+            transition: all 0.25s;
+            cursor: pointer;
         }
 
-        nav a:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
+        nav a:hover, .back-link:hover {
+            background: #f1f8e9;
+            color: #1e5a2e;
         }
 
         .logout-btn {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
-            border-radius: 25px;
+            background: rgba(220, 80, 60, 0.75);
+            padding: 8px 18px;
+            border-radius: 40px;
             cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
         }
 
         .user-welcome {
-            color: #c8e6c9;
-            margin-right: 10px;
+            background: #2c6e3c80;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.9rem;
         }
 
-        /* 🌿 Main Container */
         main {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
-            min-height: calc(100vh - 150px);
+            padding: 40px 28px;
+            min-height: calc(100vh - 180px);
         }
 
-        /* 🏷️ Filters Section */
-        #filters {
-            background: rgba(255,255,255,0.95);
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 30px;
+        .filter-panel {
+            background: rgba(255, 253, 245, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 24px 28px;
+            border-radius: 44px;
+            margin-bottom: 38px;
             display: flex;
-            gap: 20px;
+            gap: 24px;
             flex-wrap: wrap;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #a5d6a7;
+            align-items: flex-end;
+            justify-content: space-between;
+            box-shadow: 0 10px 25px rgba(60, 80, 30, 0.1);
+            border: 1px solid #cfe9cd;
         }
 
-        .filter-item {
+        .filter-group {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 170px;
         }
 
-        .filter-item label {
-            font-weight: 600;
-            color: #2e7d32;
+        .filter-group label {
+            font-weight: 700;
+            color: #2c5a2e;
         }
 
-        .filter-item select {
-            padding: 10px 15px;
-            border: 2px solid #c8e6c9;
-            border-radius: 10px;
-            font-size: 14px;
+        .filter-group select, .filter-group input {
+            padding: 12px 18px;
+            border-radius: 60px;
+            border: 1px solid #bcddb0;
             background: white;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.3s;
-            min-width: 150px;
         }
 
-        .filter-item select:focus {
-            outline: none;
-            border-color: #4caf50;
-            box-shadow: 0 0 5px rgba(76,175,80,0.3);
-        }
-
-        /* 🌸 Section Title */
-        .places-section h2 {
-            color: #2e7d32;
-            margin-bottom: 25px;
-            font-size: 28px;
+        .price-range {
             display: flex;
+            gap: 12px;
             align-items: center;
-            gap: 10px;
         }
 
-        /* 🏕️ Places Grid */
+        .price-range input {
+            width: 110px;
+        }
+
+        .reset-btn {
+            background: #e0f2e0;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin: 20px 0 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            background: linear-gradient(125deg, #245c2c, #3e8e41);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .result-count {
+            background: #e9f5e3;
+            padding: 6px 18px;
+            border-radius: 50px;
+        }
+
         .places-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 32px;
+            margin-top: 12px;
         }
 
         .place-card {
-            background: white;
-            border-radius: 20px;
+            background: #ffffffef;
+            border-radius: 36px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            cursor: pointer;
+            box-shadow: 0 18px 32px -12px rgba(0, 32, 0, 0.2);
             transition: all 0.3s;
-            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            border: 1px solid rgba(120, 170, 100, 0.3);
         }
 
         .place-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(76,175,80,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 28px 36px -12px #2e5c2e60;
         }
 
-        .place-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+        .card-media {
+            height: 220px;
+            position: relative;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 12px;
         }
 
-        .place-info {
-            padding: 20px;
+        .stay-badge {
+            background: #1d4d1fdd;
+            backdrop-filter: blur(6px);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
 
-        .place-info h3 {
-            color: #2e7d32;
+        .card-info {
+            padding: 22px 20px 24px;
+        }
+
+        .card-info h3 {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #1c4d2a;
             margin-bottom: 10px;
-            font-size: 20px;
         }
 
-        .place-info p {
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 12px;
+        .amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
         }
 
-        .place-details {
+        .amenity-tag {
+            background: #ebf7e6;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .property-meta {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-top: 12px;
+            align-items: baseline;
+            margin-top: 14px;
             padding-top: 12px;
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px dashed #cfe2cf;
         }
 
         .location {
-            color: #4caf50;
-            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 5px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .price {
-            color: #2e7d32;
-            font-weight: bold;
-            font-size: 18px;
+        .price-night {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #2c6e2f;
         }
 
-        /* 💬 Messages */
-        .info-message, .loading-message, .error-message {
-            text-align: center;
+        .detail-container {
+            background: white;
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .detail-hero {
+            height: 380px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 24px;
+        }
+
+        .detail-content {
             padding: 40px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 20px;
-            color: #2e7d32;
         }
 
-        .error-message {
-            color: #c62828;
+        .detail-title {
+            font-size: 2.5rem;
+            color: #1c4d2a;
+            margin-bottom: 16px;
         }
 
-        /* 🌿 Footer */
-        footer {
-            text-align: center;
+        .detail-meta {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e8f0e5;
+        }
+
+        .detail-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2b6e3c;
+        }
+
+        .detail-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .detail-amenity {
+            background: #e8f5e9;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .reviews-section {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 2px solid #e8f0e5;
+        }
+
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .rating-summary {
+            background: #f1f8e9;
+            padding: 16px 24px;
+            border-radius: 32px;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .big-rating {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #f5b042;
+        }
+
+        .review-card {
+            background: #fafef7;
+            border-radius: 24px;
             padding: 20px;
-            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
-            color: #c8e6c9;
-            margin-top: 50px;
-            font-size: 14px;
+            margin-bottom: 16px;
+            border: 1px solid #d4e6cf;
         }
 
-        /* 📱 Responsive */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            #filters {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-item {
-                justify-content: space-between;
-            }
-            
-            .places-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo-text {
-                font-size: 20px;
-            }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .reviewer-name {
+            font-weight: 700;
+            color: #2c5a2e;
+        }
+
+        .review-date {
+            color: #7b8e7a;
+            font-size: 0.8rem;
+        }
+
+        .stars {
+            color: #ffb74d;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .review-text {
+            color: #2d4a2d;
+            line-height: 1.5;
+        }
+
+        .add-review {
+            background: #f9fff7;
+            border-radius: 32px;
+            padding: 28px;
+            margin-top: 32px;
+            border: 2px solid #c8e6c9;
+        }
+
+        .star-rating-input {
+            display: flex;
+            gap: 8px;
+            font-size: 2rem;
+            cursor: pointer;
+            margin: 16px 0;
+        }
+
+        .star-rating-input span {
+            cursor: pointer;
+            transition: transform 0.1s;
+            color: #ddd;
+        }
+
+        .star-rating-input span.selected {
+            color: #ffb74d;
+        }
+
+        .star-rating-input span:hover {
+            transform: scale(1.1);
+        }
+
+        .review-input {
+            width: 100%;
+            padding: 16px;
+            border-radius: 24px;
+            border: 1px solid #c8e6c9;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin: 16px 0;
+        }
+
+        .submit-review {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-review:hover {
+            background: #1b5e20;
+        }
+
+        .booking-card {
+            background: #f9fff7;
+            border: 2px solid #c8e6c9;
+            border-radius: 32px;
+            padding: 28px;
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .book-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .back-to-home {
+            display: inline-block;
+            margin-bottom: 24px;
+            background: #e0f2e0;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 700px) {
+            .detail-content { padding: 24px; }
+            .detail-hero { height: 250px; }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo-container">
-            <div class="logo-icon">🌿</div>
-            <div class="logo-text">EcoStay <span>Nature & Travel</span></div>
+        <div class="logo-container" onclick="goHome()">
+            <div class="logo-icon">🏡🌿</div>
+            <div class="logo-text">EcoStay<br><span>nature stays & cabins</span></div>
         </div>
         <nav>
-            <a href="index.html">🏠 Home</a>
+            <span class="back-link" onclick="goHome()">🏠 Home</span>
             <span id="user-welcome" class="user-welcome"></span>
-            <div id="logout-btn" class="logout-btn" style="display: none;">🚪 Logout</div>
-            <a href="login.html" id="login-link" class="login-button">🌿 Login</a>
+            <div id="logout-btn" class="logout-btn" style="display: none;">🍃 Logout</div>
+            <a href="login.html" id="login-link" class="login-button">🌱 Sign in</a>
         </nav>
     </header>
 
-    <main>
-        <section id="filters">
-            <div class="filter-item">
-                <label>🌍 Filter by Country:</label>
-                <select id="country-filter">
-                    <option value="all">🌎 All Countries</option>
-                    <option value="France">🇫🇷 France</option>
-                    <option value="USA">🇺🇸 USA</option>
-                    <option value="Italy">🇮🇹 Italy</option>
-                    <option value="Spain">🇪🇸 Spain</option>
-                    <option value="India">🇮🇳 India</option>
-                </select>
-            </div>
-        </section>
-
-        <section class="places-section">
-            <h2>🏕️ Discover Eco-Friendly Places</h2>
-            <div id="places-list" class="places-grid">
-                <div class="info-message">🌿 Loading amazing places...</div>
-            </div>
-        </section>
-    </main>
+    <main id="app-root"></main>
 
     <footer>
-        <p>🌍 EcoStay - Sustainable Travel Experiences | © 2026</p>
+        <p>🌿 EcoStay — where nature meets comfort | book unique eco-accommodations worldwide 🌎</p>
     </footer>
 
     <script>
-        const API_BASE_URL = 'http://127.0.0.1:5000/api/v1';
-        let allPlaces = [];
-        
-        // التحقق من المصادقة
-        const token = localStorage.getItem('access_token');
-        const loginLink = document.getElementById('login-link');
-        const logoutBtn = document.getElementById('logout-btn');
-        const userWelcome = document.getElementById('user-welcome');
-        
+        // البيانات
+        const STAYS_DATASET = [
+            { id: "st1", name: "Canopy Treehouse Retreat", location: "Costa Rica", type: "treehouse", pricePerNight: 185, description: "Off-grid treehouse nestled in cloud forest", fullDescription: "Experience the magic of the Costa Rican cloud forest from your private treehouse.", amenities: ["hot tub", "breakfast included", "hiking trails"], imageEmoji: "🌳🛖", rating: 4.9, reviewsCount: 128 },
+            { id: "st2", name: "Glacier View Eco-Lodge", location: "Norway", type: "eco-lodge", pricePerNight: 245, description: "Panoramic fjord views, solar-powered", fullDescription: "Perched on the edge of a fjord, this eco-lodge offers unrivaled views.", amenities: ["sauna", "kitchen", "fjord kayaking"], imageEmoji: "🏔️🛶", rating: 4.8, reviewsCount: 94 },
+            { id: "st3", name: "Lavender Fields Cottage", location: "France", type: "farmstay", pricePerNight: 130, description: "Stone cottage in Provence", fullDescription: "A charming stone cottage surrounded by lavender fields.", amenities: ["pool", "bicycles", "organic breakfast"], imageEmoji: "🌸🏡", rating: 4.7, reviewsCount: 203 },
+            { id: "st4", name: "Redwood Canopy Nest", location: "USA", type: "treehouse", pricePerNight: 310, description: "Secluded treehouse among redwoods", fullDescription: "Suspended above the forest floor, complete privacy.", amenities: ["fire pit", "yoga deck", "outdoor spa"], imageEmoji: "🌲🏠", rating: 5.0, reviewsCount: 67 },
+            { id: "st5", name: "Dolomites Alpine Refuge", location: "Italy", type: "cabin", pricePerNight: 198, description: "Rustic-modern cabin", fullDescription: "A handcrafted alpine cabin with panoramic windows.", amenities: ["sauna", "panoramic terrace", "guided treks"], imageEmoji: "⛰️🏕️", rating: 4.9, reviewsCount: 156 }
+        ];
+
+        let additionalReviews = {};
+
+        function loadReviewsFromStorage() {
+            const stored = localStorage.getItem('ecostay_reviews');
+            if (stored) additionalReviews = JSON.parse(stored);
+        }
+
+        function saveReviewsToStorage() {
+            localStorage.setItem('ecostay_reviews', JSON.stringify(additionalReviews));
+        }
+
+        function getPlaceReviews(placeId) {
+            const userReviews = additionalReviews[placeId] || [];
+            const defaultReviews = [
+                { id: 'd1', userName: "Sarah M.", rating: 5, comment: "Absolutely magical experience!", date: "2025-02-15" },
+                { id: 'd2', userName: "David L.", rating: 4, comment: "Great location and very peaceful.", date: "2025-01-20" }
+            ];
+            return userReviews.length === 0 ? defaultReviews : userReviews;
+        }
+
+        function addReview(placeId, userName, rating, comment) {
+            if (!additionalReviews[placeId]) additionalReviews[placeId] = [];
+            additionalReviews[placeId].unshift({
+                id: Date.now().toString(),
+                userName: userName,
+                rating: rating,
+                comment: comment,
+                date: new Date().toISOString().split('T')[0]
+            });
+            saveReviewsToStorage();
+            
+            const allReviews = getPlaceReviews(placeId);
+            const totalRating = allReviews.reduce((sum, r) => sum + r.rating, 0);
+            const avgRating = totalRating / allReviews.length;
+            const place = STAYS_DATASET.find(p => p.id === placeId);
+            if (place) {
+                place.rating = parseFloat(avgRating.toFixed(1));
+                place.reviewsCount = allReviews.length;
+            }
+        }
+
         function updateAuthUI() {
-            const token = localStorage.getItem('access_token');
-            if (token) {
-                // مستخدم مسجل دخول
-                loginLink.style.display = 'none';
-                logoutBtn.style.display = 'block';
-                const userInfo = JSON.parse(localStorage.getItem('user_info') || '{}');
-                if (userInfo.first_name) {
-                    userWelcome.innerHTML = `👤 Welcome, ${userInfo.first_name}!`;
-                } else {
-                    userWelcome.innerHTML = `👤 Welcome!`;
-                }
+            const tokenExists = localStorage.getItem('access_token');
+            const loginLink = document.getElementById('login-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userWelcomeSpan = document.getElementById('user-welcome');
+            
+            if (tokenExists) {
+                if(loginLink) loginLink.style.display = 'none';
+                if(logoutBtn) logoutBtn.style.display = 'block';
+                let userInfo = { first_name: "Explorer" };
+                try {
+                    const stored = localStorage.getItem('user_info');
+                    if (stored) userInfo = JSON.parse(stored);
+                } catch(e) {}
+                if(userWelcomeSpan) userWelcomeSpan.innerHTML = `🌿 Hello, ${userInfo.first_name || "Nature lover"}!`;
+                return userInfo.first_name || "Explorer";
             } else {
-                // مستخدم غير مسجل دخول
-                loginLink.style.display = 'block';
-                logoutBtn.style.display = 'none';
-                userWelcome.innerHTML = '';
+                if(loginLink) loginLink.style.display = 'block';
+                if(logoutBtn) logoutBtn.style.display = 'none';
+                if(userWelcomeSpan) userWelcomeSpan.innerHTML = '';
+                return null;
             }
         }
-        
-        // التحقق من المصادقة للصفحة
-        if (!token) {
-            window.location.href = 'login.html';
+
+        if (!localStorage.getItem('access_token')) {
+            localStorage.setItem('access_token', 'guest_demo_mode');
+            localStorage.setItem('user_info', JSON.stringify({ first_name: "Traveler" }));
         }
-        
-        updateAuthUI();
-        
-        async function loadPlaces() {
-            const container = document.getElementById('places-list');
-            const token = localStorage.getItem('access_token');
-            
-            if (!token) {
-                container.innerHTML = '<div class="error-message">🔒 Please login to view places</div>';
-                return;
-            }
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/places`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                
-                if (response.status === 401) {
-                    localStorage.removeItem('access_token');
-                    window.location.href = 'login.html';
-                    return;
-                }
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch places');
-                }
-                
-                allPlaces = await response.json();
-                displayPlaces(allPlaces);
-            } catch (error) {
-                console.error('Error:', error);
-                container.innerHTML = '<div class="error-message">🌿 Error loading places. Please make sure the server is running.</div>';
-            }
-        }
-        
-        function getPlaceImage(location) {
-            const images = {
-                'France': '🗼',
-                'USA': '🗽',
-                'Italy': '🏛️',
-                'Spain': '🏰',
-                'India': '🕌',
-                'default': '🏕️'
-            };
-            return images[location] || images['default'];
-        }
-        
-        function displayPlaces(places) {
-            const container = document.getElementById('places-list');
-            
-            if (!places || places.length === 0) {
-                container.innerHTML = '<div class="info-message">🌿 No places found in this region</div>';
-                return;
-            }
-            
-            container.innerHTML = places.map(place => `
-                <div class="place-card" onclick="viewPlace('${place.id}')">
-                    <div class="place-image">${getPlaceImage(place.location)}</div>
-                    <div class="place-info">
-                        <h3>${place.name}</h3>
-                        <p>${place.description || 'Experience nature at its finest at this beautiful eco-friendly destination.'}</p>
-                        <div class="place-details">
-                            <div class="location">📍 ${place.location}</div>
-                            <div class="price">⭐ Eco Certified</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        function filterPlaces() {
-            const country = document.getElementById('country-filter').value;
-            if (country === 'all') {
-                displayPlaces(allPlaces);
-            } else {
-                const filtered = allPlaces.filter(place => place.location === country);
-                displayPlaces(filtered);
-            }
-        }
-        
-        function viewPlace(placeId) {
-            localStorage.setItem('selected_place_id', placeId);
-            window.location.href = 'place.html';
-        }
-        
+        loadReviewsFromStorage();
+        let currentUserName = updateAuthUI() || "Traveler";
+
         function logout() {
             localStorage.removeItem('access_token');
             localStorage.removeItem('user_info');
-            window.location.href = 'login.html';
+            updateAuthUI();
+            goHome();
         }
+
+        function getTypeLabel(type) {
+            const map = { "treehouse": "🌳 Treehouse", "eco-lodge": "🌱 Eco-Lodge", "cabin": "🪵 Cabin", "glamping": "✨ Glamping", "farmstay": "🐑 Farmstay" };
+            return map[type] || "🏡 Nature stay";
+        }
+
+        function getRandomGradientBg(seed) {
+            const gradients = ["linear-gradient(125deg, #9fd3a7, #c4e6b0)", "linear-gradient(135deg, #b8dfb0, #d9f0cf)", "linear-gradient(115deg, #aad0aa, #cbefc0)"];
+            return gradients[Math.abs(seed.length * 3) % gradients.length];
+        }
+
+        function renderStarsHtml(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= rating ? '★' : '☆';
+            }
+            return stars;
+        }
+
+        function renderHome() {
+            let filtered = [...STAYS_DATASET];
+            const html = `
+                <div class="filter-panel">
+                    <div class="filter-group"><label>🌍 COUNTRY</label><select id="country-filter"><option value="all">All</option><option value="Costa Rica">🇨🇷 Costa Rica</option><option value="Norway">🇳🇴 Norway</option><option value="France">🇫🇷 France</option><option value="USA">🇺🇸 USA</option><option value="Italy">🇮🇹 Italy</option></select></div>
+                    <div class="filter-group"><label>🏕️ TYPE</label><select id="type-filter"><option value="all">Any</option><option value="treehouse">🌳 Treehouse</option><option value="eco-lodge">🌱 Eco-Lodge</option><option value="cabin">🪵 Cabin</option><option value="farmstay">🐑 Farmstay</option></select></div>
+                    <div class="filter-group"><label>💰 Price (USD)</label><div class="price-range"><input type="number" id="min-price" value="0"><span>—</span><input type="number" id="max-price" value="800"></div></div>
+                    <button id="reset-filters" class="reset-btn">⟳ Reset</button>
+                </div>
+                <div class="section-title"><h2>🏔️ Nature stays · Eco retreats</h2><div class="result-count">🏕️ ${filtered.length} stays</div></div>
+                <div id="places-list" class="places-grid">${filtered.map(stay => `
+                    <div class="place-card" onclick="viewStayDetail('${stay.id}')">
+                        <div class="card-media" style="background: ${getRandomGradientBg(stay.id)}; display: flex; align-items: flex-end; justify-content: space-between;">
+                            <div class="stay-badge">${getTypeLabel(stay.type)}</div>
+                            <div style="font-size: 58px;">${stay.imageEmoji}</div>
+                        </div>
+                        <div class="card-info">
+                            <h3>${stay.name}</h3>
+                            <div class="amenities">${stay.amenities.slice(0,3).map(a => `<span class="amenity-tag">✔️ ${a}</span>`).join('')}</div>
+                            <p style="margin:12px 0;">${stay.description}</p>
+                            <div class="property-meta"><div class="location">📍 ${stay.location}</div><div class="price-night">$${stay.pricePerNight} <small>/night</small></div></div>
+                            <div>⭐ ${stay.rating} (${stay.reviewsCount} reviews) · ${renderStarsHtml(stay.rating)}</div>
+                        </div>
+                    </div>
+                `).join('')}</div>
+            `;
+            document.getElementById('app-root').innerHTML = html;
+            
+            document.getElementById('country-filter')?.addEventListener('change', () => filterPlaces());
+            document.getElementById('type-filter')?.addEventListener('change', () => filterPlaces());
+            document.getElementById('min-price')?.addEventListener('input', () => filterPlaces());
+            document.getElementById('max-price')?.addEventListener('input', () => filterPlaces());
+            document.getElementById('reset-filters')?.addEventListener('click', resetFilters);
+        }
+
+        function filterPlaces() {
+            const country = document.getElementById('country-filter')?.value || 'all';
+            const type = document.getElementById('type-filter')?.value || 'all';
+            const min = parseFloat(document.getElementById('min-price')?.value) || 0;
+            const max = parseFloat(document.getElementById('max-price')?.value) || 9999;
+            
+            const filtered = STAYS_DATASET.filter(stay => {
+                if (country !== 'all' && stay.location !== country) return false;
+                if (type !== 'all' && stay.type !== type) return false;
+                if (stay.pricePerNight < min || stay.pricePerNight > max) return false;
+                return true;
+            });
+            
+            const container = document.getElementById('places-list');
+            if (container) {
+                container.innerHTML = filtered.map(stay => `
+                    <div class="place-card" onclick="viewStayDetail('${stay.id}')">
+                        <div class="card-media" style="background: ${getRandomGradientBg(stay.id)}; display: flex; align-items: flex-end; justify-content: space-between;">
+                            <div class="stay-badge">${getTypeLabel(stay.type)}</div>
+                            <div style="font-size: 58px;">${stay.imageEmoji}</div>
+                        </div>
+                        <div class="card-info">
+                            <h3>${stay.name}</h3>
+                            <div class="amenities">${stay.amenities.slice(0,3).map(a => `<span class="amenity-tag">✔️ ${a}</span>`).join('')}</div>
+                            <p style="margin:12px 0;">${stay.description}</p>
+                            <div class="property-meta"><div class="location">📍 ${stay.location}</div><div class="price-night">$${stay.pricePerNight} <small>/night</small></div></div>
+                            <div>⭐ ${stay.rating} (${stay.reviewsCount} reviews) · ${renderStarsHtml(stay.rating)}</div>
+                        </div>
+                    </div>
+                `).join('');
+                const resultCount = document.querySelector('.result-count');
+                if(resultCount) resultCount.innerHTML = `🏕️ ${filtered.length} stays`;
+            }
+        }
+
+        function resetFilters() {
+            const country = document.getElementById('country-filter');
+            const type = document.getElementById('type-filter');
+            const min = document.getElementById('min-price');
+            const max = document.getElementById('max-price');
+            if(country) country.value = 'all';
+            if(type) type.value = 'all';
+            if(min) min.value = '0';
+            if(max) max.value = '800';
+            filterPlaces();
+        }
+
+        function renderDetail(stayId) {
+            const stay = STAYS_DATASET.find(s => s.id === stayId);
+            if (!stay) { renderHome(); return; }
+            
+            const reviews = getPlaceReviews(stayId);
+            const totalRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+            const avg = reviews.length ? (totalRating / reviews.length).toFixed(1) : stay.rating;
+            
+            const reviewsHTML = reviews.map(rev => `
+                <div class="review-card">
+                    <div class="review-header"><span class="reviewer-name">${rev.userName}</span><span class="review-date">${rev.date}</span></div>
+                    <div class="stars">${renderStarsHtml(rev.rating)}</div>
+                    <div class="review-text">${rev.comment}</div>
+                </div>
+            `).join('');
+            
+            const detailHTML = `
+                <div class="back-to-home" onclick="goHome()">← Back to all stays</div>
+                <div class="detail-container">
+                    <div class="detail-hero" style="background: ${getRandomGradientBg(stay.id + 'hero')}; display: flex; align-items: flex-end; justify-content: space-between;">
+                        <div class="stay-badge" style="font-size:1rem;">${getTypeLabel(stay.type)}</div>
+                        <div style="font-size: 80px;">${stay.imageEmoji}</div>
+                    </div>
+                    <div class="detail-content">
+                        <h1 class="detail-title">${stay.name}</h1>
+                        <div class="detail-meta"><span>📍 ${stay.location}</span><span>⭐ ${avg} · ${reviews.length} reviews</span><span class="detail-price">$${stay.pricePerNight} <span style="font-size:1rem;">/ night</span></span></div>
+                        <p style="font-size:1.1rem; line-height:1.6;">${stay.fullDescription || stay.description}</p>
+                        <h3>✨ Premium amenities</h3>
+                        <div class="detail-amenities">${stay.amenities.map(am => `<div class="detail-amenity">✔️ ${am}</div>`).join('')}</div>
+                        
+                        <div class="reviews-section">
+                            <div class="reviews-header"><h2>📝 Guest reviews</h2><div class="rating-summary"><span class="big-rating">⭐ ${avg}</span><span>${reviews.length} ratings</span></div></div>
+                            ${reviewsHTML}
+                            
+                            <div class="add-review">
+                                <h3>💚 Rate your stay</h3>
+                                <div class="star-rating-input" id="star-selector">
+                                    <span data-star="1">☆</span><span data-star="2">☆</span><span data-star="3">☆</span><span data-star="4">☆</span><span data-star="5">☆</span>
+                                </div>
+                                <textarea id="review-comment" class="review-input" rows="3" placeholder="Share your experience..."></textarea>
+                                <button id="submit-review-btn" class="submit-review">📝 Submit review</button>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-card">
+                            <h3>🌿 Ready to reconnect with nature?</h3>
+                            <p style="margin: 16px 0;">Free cancellation up to 7 days before arrival.</p>
+                            <button class="book-btn" onclick="alert('✨ Thank you! Booking request sent for ${stay.name}')">📅 Reserve this eco-stay →</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('app-root').innerHTML = detailHTML;
+            
+            // إعداد نجوم التقييم
+            let selectedRating = 0;
+            const stars = document.querySelectorAll('#star-selector span');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    selectedRating = parseInt(this.getAttribute('data-star'));
+                    stars.forEach(s => {
+                        const starVal = parseInt(s.getAttribute('data-star'));
+                        if(starVal <= selectedRating) {
+                            s.innerHTML = '★';
+                            s.classList.add('selected');
+                        } else {
+                            s.innerHTML = '☆';
+                            s.classList.remove('selected');
+                        }
+                    });
+                });
+            });
+            
+            document.getElementById('submit-review-btn')?.addEventListener('click', () => {
+                const comment = document.getElementById('review-comment')?.value;
+                if(selectedRating === 0) {
+                    alert('Please select a rating first!');
+                    return;
+                }
+                if(!comment || comment.trim() === '') {
+                    alert('Please write a comment!');
+                    return;
+                }
+                addReview(stay.id, currentUserName, selectedRating, comment);
+                renderDetail(stay.id);
+            });
+        }
+
+        function viewStayDetail(stayId) {
+            renderDetail(stayId);
+        }
+
+        function goHome() {
+            renderHome();
+        }
+
+        // بدء التطبيق
+        renderHome();
         
-        document.getElementById('country-filter').addEventListener('change', filterPlaces);
-        document.getElementById('logout-btn').addEventListener('click', logout);
-        
-        // تحميل الأماكن عند تحميل الصفحة
-        loadPlaces();
+        // ربط زر logout
+        document.getElementById('logout-btn')?.addEventListener('click', logout);
     </script>
 </body>
 </html>
