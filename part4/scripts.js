@@ -7,13 +7,13 @@ function getCookie(name) {
 
 async function fetchPlaces(token) {
     try {
-        const response = await fetch('http://localhost:5000/api/v1/places/', {
+        // ✅ التعديل: إزالة localhost واستخدام رابط نسبي
+        const response = await fetch('/api/v1/places', {
             method: 'GET',
             headers: { 
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
-            // ❌ حذف credentials
         });
 
         if (response.ok) {
@@ -46,9 +46,9 @@ function displayPlaces(places) {
         card.setAttribute('data-price', place.price); 
         
         card.innerHTML = `
-            <h3>${place.title}</h3>
+            <h3>${place.name || place.title}</h3>
             <p>${place.description}</p>
-            <p>Price per night: <strong>$${place.price}</strong></p>
+            <p>Price per night: <strong>$${place.price || 0}</strong></p>
             <button onclick="window.location.href='place.html?id=${place.id}'">View Details</button>
         `;
         container.appendChild(card);
@@ -68,7 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://localhost:5000/api/v1/auth/login', {
+                // ✅ التعديل: إزالة localhost واستخدام رابط نسبي
+                const response = await fetch('/api/v1/auth/login', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json' 
@@ -82,12 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.cookie = `token=${data.access_token}; path=/; max-age=3600; SameSite=Lax`;
                     window.location.href = 'index.html';
                 } else {
-                    alert('Login failed: ' + (data.message || 'Check your credentials'));
+                    alert('Login failed: ' + (data.error || data.message || 'Check your credentials'));
                 }
 
             } catch (error) {
                 console.error(error);
-                alert('Connection error! تأكد أن Flask شغال');
+                alert('Connection error! تأكد من اتصال الإنترنت');
             }
         });
     }
