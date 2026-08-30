@@ -81,7 +81,7 @@
         
         // التحقق من صحة البيانات
         if (!email || !password) {
-            errorDiv.textContent = '🌿 Please enter both email and password';
+            errorDiv.textContent = ' Please enter both email and password';
             errorDiv.style.display = 'block';
             return;
         }
@@ -89,7 +89,7 @@
         // تعطيل زر التسجيل أثناء المعالجة
         const submitButton = document.querySelector('#login-form button');
         const originalButtonText = submitButton.textContent;
-        submitButton.textContent = '🔄 Logging in...';
+        submitButton.textContent = ' Logging in...';
         submitButton.disabled = true;
         
         try {
@@ -120,7 +120,7 @@
                 }
                 
                 // عرض رسالة نجاح
-                successDiv.textContent = '✅ Login successful! Redirecting to nature... 🌿';
+                successDiv.textContent = 'Login successful! Redirecting to nature... ';
                 successDiv.style.display = 'block';
                 
                 // توجيه المستخدم إلى الصفحة الرئيسية بعد 1.5 ثانية
@@ -129,7 +129,7 @@
                 }, 1500);
             } else {
                 // عرض رسالة الخطأ
-                errorDiv.textContent = data.error || data.msg || '❌ Login failed. Please check your credentials.';
+                errorDiv.textContent = data.error || data.msg || ' Login failed. Please check your credentials.';
                 errorDiv.style.display = 'block';
             }
         } catch (error) {

@@ -10,50 +10,50 @@
 
 <header>
     <div class="logo-container">
-        <div class="logo-icon">🌿</div>
+        <div class="logo-icon"></div>
         <div class="logo-text">EcoStay <span>Nature & Travel</span></div>
     </div>
     <nav>
-        <a href="index.html">🏠 Home</a>
+        <a href="index.html"> Home</a>
         <span id="user-welcome" class="user-welcome"></span>
-        <div id="logout-btn" class="logout-btn" style="display: none;">🚪 Logout</div>
-        <a href="login.html" id="login-link" class="login-button" style="display: none;">🌿 Login</a>
+        <div id="logout-btn" class="logout-btn" style="display: none;">Logout</div>
+        <a href="login.html" id="login-link" class="login-button" style="display: none;"> Login</a>
     </nav>
 </header>
 
 <main>
     <!-- تفاصيل المكان -->
     <section id="place-details" class="place-details">
-        <div class="loading-message">🌿 Loading place details...</div>
+        <div class="loading-message"> Loading place details...</div>
     </section>
 
     <!-- قائمة التقييمات -->
     <section id="reviews-section">
-        <h3>📖 Traveler Reviews</h3>
+        <h3> Traveler Reviews</h3>
         <div id="reviews-list">
-            <div class="loading-message">🌿 Loading reviews...</div>
+            <div class="loading-message"> Loading reviews...</div>
         </div>
     </section>
 
     <!-- نموذج إضافة تقييم -->
     <section id="add-review-section" style="display: none;">
-        <h3>✍️ Share Your Experience</h3>
+        <h3> Share Your Experience</h3>
         <form id="review-form">
             <div class="form-group">
-                <label>⭐ Rating</label>
+                <label> Rating</label>
                 <select id="rating" required>
-                    <option value="5">⭐⭐⭐⭐⭐ - Excellent (5 stars)</option>
-                    <option value="4">⭐⭐⭐⭐ - Very Good (4 stars)</option>
-                    <option value="3">⭐⭐⭐ - Good (3 stars)</option>
-                    <option value="2">⭐⭐ - Fair (2 stars)</option>
-                    <option value="1">⭐ - Poor (1 star)</option>
+                    <option value="5"> - Excellent (5 stars)</option>
+                    <option value="4"> - Very Good (4 stars)</option>
+                    <option value="3"> - Good (3 stars)</option>
+                    <option value="2"> - Fair (2 stars)</option>
+                    <option value="1"> - Poor (1 star)</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>📝 Your Review</label>
+                <label>Your Review</label>
                 <textarea id="comment" rows="4" placeholder="Share your experience at this eco-friendly place..." required></textarea>
             </div>
-            <button type="submit" class="submit-btn">🌿 Submit Review</button>
+            <button type="submit" class="submit-btn"> Submit Review</button>
             <div id="review-success" class="success-message"></div>
             <div id="review-error" class="error-message"></div>
         </form>
@@ -61,7 +61,7 @@
 </main>
 
 <footer>
-    <p>🌍 EcoStay - Sustainable Travel Experiences | © 2026</p>
+    <p> EcoStay - Sustainable Travel Experiences | © 2026</p>
 </footer>
 
 <script>
@@ -125,15 +125,15 @@
             
             // عرض تفاصيل المكان
             container.innerHTML = `
-                <div class="place-hero">🏕️</div>
+                <div class="place-hero"></div>
                 <div class="place-info">
                     <h2>${place.name}</h2>
-                    <div class="place-location">📍 ${place.location}</div>
+                    <div class="place-location"> ${place.location}</div>
                     <div class="place-description">${place.description || 'Experience nature at its finest at this beautiful eco-friendly destination. Perfect for nature lovers and sustainable travelers.'}</div>
                     <div class="place-stats">
-                        <div class="stat">🌿 Eco-Certified</div>
-                        <div class="stat">⭐ Top Rated</div>
-                        <div class="stat">🏔️ Nature View</div>
+                        <div class="stat"> Eco-Certified</div>
+                        <div class="stat">Top Rated</div>
+                        <div class="stat"> Nature View</div>
                     </div>
                 </div>
             `;
@@ -144,7 +144,7 @@
         } catch (error) {
             container.innerHTML = `
                 <div class="place-info">
-                    <h2>❌ Place Not Found</h2>
+                    <h2> Place Not Found</h2>
                     <p>Sorry, we couldn't find this place.</p>
                     <a href="index.html" style="color: #4caf50;">← Back to Places</a>
                 </div>
@@ -165,23 +165,23 @@
                 const reviews = await response.json();
                 
                 if (reviews.length === 0) {
-                    container.innerHTML = '<div class="no-reviews">🌿 No reviews yet. Be the first to share your experience!</div>';
+                    container.innerHTML = '<div class="no-reviews"> No reviews yet. Be the first to share your experience!</div>';
                 } else {
                     container.innerHTML = reviews.map(review => `
                         <div class="review-card">
                             <div class="review-header">
-                                <div class="review-rating">${'⭐'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
-                                <div class="review-date">📅 ${new Date(review.created_at).toLocaleDateString()}</div>
+                                <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                                <div class="review-date"> ${new Date(review.created_at).toLocaleDateString()}</div>
                             </div>
                             <div class="review-comment">${review.comment}</div>
                         </div>
                     `).join('');
                 }
             } else {
-                container.innerHTML = '<div class="no-reviews">🌿 Unable to load reviews</div>';
+                container.innerHTML = '<div class="no-reviews"> Unable to load reviews</div>';
             }
         } catch (error) {
-            container.innerHTML = '<div class="no-reviews">🌿 Error loading reviews</div>';
+            container.innerHTML = '<div class="no-reviews"> Error loading reviews</div>';
         }
     }
     
@@ -199,13 +199,13 @@
         errorDiv.style.display = 'none';
         
         if (!comment.trim()) {
-            errorDiv.textContent = '❌ Please write a review before submitting';
+            errorDiv.textContent = ' Please write a review before submitting';
             errorDiv.style.display = 'block';
             return;
         }
         
         submitBtn.disabled = true;
-        submitBtn.textContent = '🔄 Submitting...';
+        submitBtn.textContent = 'Submitting...';
         
         try {
             const response = await fetch(`${API_BASE_URL}/places/${placeId}/reviews`, {
@@ -221,7 +221,7 @@
             });
             
             if (response.ok) {
-                successDiv.textContent = '✅ Review submitted successfully! 🌿';
+                successDiv.textContent = ' Review submitted successfully! ';
                 successDiv.style.display = 'block';
                 document.getElementById('review-form').reset();
                 document.getElementById('rating').value = '5';
@@ -232,15 +232,15 @@
                 }, 3000);
             } else {
                 const error = await response.json();
-                errorDiv.textContent = error.error || '❌ Failed to submit review';
+                errorDiv.textContent = error.error || ' Failed to submit review';
                 errorDiv.style.display = 'block';
             }
         } catch (error) {
-            errorDiv.textContent = '🌿 Network error. Please try again.';
+            errorDiv.textContent = ' Network error. Please try again.';
             errorDiv.style.display = 'block';
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = '🌿 Submit Review';
+            submitBtn.textContent = ' Submit Review';
         }
     });
     
