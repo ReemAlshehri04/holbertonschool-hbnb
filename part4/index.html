@@ -7,6 +7,14 @@
       content="width=device-width, initial-scale=1.0, user-scalable=yes"
     />
     <link rel="stylesheet" href="index.css" />
+    <style>
+      #min-price,
+      #max-price {
+        direction: ltr;
+        text-align: left;
+        unicode-bidi: plaintext;
+      }
+    </style>
     <title>EcoStay · Nature Stays & Eco Retreats</title>
   </head>
   <body>
@@ -242,7 +250,11 @@
                 <div class="filter-panel">
                     <div class="filter-group"><label> COUNTRY</label><select id="country-filter"><option value="all">All</option><option value="Costa Rica">🇨🇷 Costa Rica</option><option value="Norway">🇳🇴 Norway</option><option value="France">🇫🇷 France</option><option value="USA">🇺🇸 USA</option><option value="Italy">🇮🇹 Italy</option></select></div>
                     <div class="filter-group"><label> TYPE</label><select id="type-filter"><option value="all">Any</option><option value="treehouse"> Treehouse</option><option value="eco-lodge"> Eco-Lodge</option><option value="cabin"> Cabin</option><option value="farmstay"> Farmstay</option></select></div>
-                    <div class="filter-group"><label> Price (USD)</label><div class="price-range"><input type="number" id="min-price" value="0"><span>—</span><input type="number" id="max-price" value="800"></div></div>
+                    <div class="filter-group"><label> Price (USD)</label><div class="price-range">
+                        <input type="text" id="min-price" value="0" inputmode="numeric" lang="en" dir="ltr" autocomplete="off">
+                        <span>—</span>
+                        <input type="text" id="max-price" value="800" inputmode="numeric" lang="en" dir="ltr" autocomplete="off">
+                    </div></div>
                     <button id="reset-filters" class="reset-btn">⟳ Reset</button>
                 </div>
                 <div class="section-title"><h2> Nature stays · Eco retreats</h2><div class="result-count"> ${filtered.length} stays</div></div>
@@ -282,10 +294,16 @@
           ?.addEventListener("change", () => filterPlaces());
         document
           .getElementById("min-price")
-          ?.addEventListener("input", () => filterPlaces());
+          ?.addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9]/g, "");
+            filterPlaces();
+          });
         document
           .getElementById("max-price")
-          ?.addEventListener("input", () => filterPlaces());
+          ?.addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9]/g, "");
+            filterPlaces();
+          });
         document
           .getElementById("reset-filters")
           ?.addEventListener("click", resetFilters);
@@ -324,7 +342,7 @@
                               .slice(0, 3)
                               .map(
                                 (a) =>
-                                  `<span class="amenity-tag">✔️ ${a}</span>`,
+                                  `<span class="amenity-tag"> ${a}</span>`,
                               )
                               .join("")}</div>
                             <p style="margin:12px 0;">${stay.description}</p>
